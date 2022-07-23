@@ -4,23 +4,22 @@ import AlertContext from '../context/alert/AlertContext'
 import {searchUsers} from '../context/github/GithubActions'
 
 function UserSearch() {
+  const [text, setText] = useState('')
 
-  const [text,setText] = useState('')
-
-  const {users,dispatch} = useContext(GithubContext)
-  const {setAlert} = useContext(AlertContext)
+  const { users, dispatch } = useContext(GithubContext)
+  const { setAlert } = useContext(AlertContext)
 
   const handleChange = (e) => setText(e.target.value)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if(text === ''){
-      setAlert('please enter something','error')
-    }else{
-      dispatch({type:'SET_LOADING'})
+    if (text === '') {
+      setAlert('Please enter something', 'error')
+    } else {
+      dispatch({ type: 'SET_LOADING' })
       const users = await searchUsers(text)
-      dispatch({type: 'GET_USERS',payload:users})
+      dispatch({ type: 'GET_USERS', payload: users })
 
       setText('')
     }
